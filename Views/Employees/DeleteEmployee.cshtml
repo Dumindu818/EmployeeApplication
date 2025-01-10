@@ -1,0 +1,50 @@
+﻿@model EmployeeApplication.Models.EmployeesEntity
+
+@{
+    ViewData["Title"] = "DeleteEmployee";
+}
+
+
+<div class="container">
+    <div class="col-md-10 border-1">
+        <form asp-action="DeleteEmployeeDetails">
+            <input asp-for="Id" hidden />
+            <h2>Delete Employee Details</h2><hr />
+            <div class="row">
+                <div class="col-12 text-center">
+                    <b>@ViewBag.Message</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" readonly/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" readonly/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="JobPosition" class="control-label"></label>
+                    <input asp-for="JobPosition" class="form-control" readonly/>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,54 @@
+﻿@model EmployeeApplication.Models.EmployeesEntity
+
+@{
+    ViewData["Title"] = "EditEmployee";
+}
+
+
+<div class="container">
+    <div class="col-md-10 border-1">
+        <form asp-action="EditEmployeeDetails">
+            <input asp-for="Id" hidden />
+            <h2>Edit Employee Details</h2><hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <b>@ViewBag.Message</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="JobPosition" class="control-label"></label>
+                    <input asp-for="JobPosition" class="form-control" />
+                    <span asp-validation-for="JobPosition" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
