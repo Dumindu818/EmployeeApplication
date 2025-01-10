@@ -146,5 +146,32 @@ namespace EmployeeApplication.Data
             }
 
         }
+
+        // Calculate Working Days
+        public int GetWorkingDays(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("CalculateWorkingDays", _connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                cmd.Parameters.Add(new SqlParameter("@StartDate", SqlDbType.Date) { Value = startDate });
+                cmd.Parameters.Add(new SqlParameter("@EndDate", SqlDbType.Date) { Value = endDate });
+
+                _connection.Open();
+                int workingDays = (int)cmd.ExecuteScalar();
+                _connection.Close();
+
+                return workingDays;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error calculating working days: {ex.Message}");
+                throw;
+            }
+        }
+
     }
 }
