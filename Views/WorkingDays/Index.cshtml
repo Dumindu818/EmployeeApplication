@@ -47,32 +47,21 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        function isWeekend(date) {
-            const day = new Date(date).getDay();
-            return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
+        function disableWeekends(input) {
+            input.on('input', function () {
+                const date = new Date($(this).val());
+                const day = date.getDay();
+
+                // Reset the input if a weekend is selected
+                if (day === 0 || day === 6) {
+                    alert("Weekends (Saturday and Sunday) are not allowed. Please select a weekday.");
+                    $(this).val('');
+                }
+            });
         }
 
-        $('#startDate, #endDate').on('change', function () {
-            const startDate = $('#startDate').val();
-            const endDate = $('#endDate').val();
-            const inputField = $(this);
-
-            // Reset any previous validation messages
-            inputField.removeClass('is-invalid');
-            inputField.next('.invalid-feedback').remove();
-
-            if (startDate && isWeekend(startDate)) {
-                showValidationMessage('#startDate', 'Start date cannot be a weekend (Saturday or Sunday).');
-            }
-            if (endDate && isWeekend(endDate)) {
-                showValidationMessage('#endDate', 'End date cannot be a weekend (Saturday or Sunday).');
-            }
-        });
-
-        function showValidationMessage(inputSelector, message) {
-            $(inputSelector)
-                .addClass('is-invalid')
-                .after('<div class="invalid-feedback">' + message + '</div>');
-        }
+        // Apply the weekend disabling logic to both inputs
+        disableWeekends($('#startDate'));
+        disableWeekends($('#endDate'));
     });
 </script>
