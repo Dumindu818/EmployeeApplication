@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeApplication.Models
 {
-    public class WorkingDaysModel
+    public class WorkingDaysModel //Model For Working Days
     {
         [Required]
         [DataType(DataType.Date)]
