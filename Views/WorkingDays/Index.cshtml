@@ -10,14 +10,14 @@
     <form asp-action="CalculateWorkingDays" method="post">
         <div class="form-group">
             <div class="col-3">
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" class="form-control" required />
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" required />
             </div>
         </div>
         <div class="form-group">
             <div class="col-3">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" class="form-control" required />
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required />
             </div>
         </div>
         <br />
@@ -25,8 +25,6 @@
         <button type="submit" class="btn btn-primary mt-3">Calculate</button>
     </form>
 </div>
-
-
 
 @if (ViewBag.WorkingDays != null)
 {
@@ -36,7 +34,6 @@
         <p><strong>From:</strong> @ViewBag.StartDate</p>
 
         <p><strong>To:</strong> @ViewBag.EndDate</p>
-
     </div>
 }
 
@@ -46,3 +43,36 @@
         <p>@ViewBag.Error</p>
     </div>
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function isWeekend(date) {
+            const day = new Date(date).getDay();
+            return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
+        }
+
+        $('#startDate, #endDate').on('change', function () {
+            const startDate = $('#startDate').val();
+            const endDate = $('#endDate').val();
+            const inputField = $(this);
+
+            // Reset any previous validation messages
+            inputField.removeClass('is-invalid');
+            inputField.next('.invalid-feedback').remove();
+
+            if (startDate && isWeekend(startDate)) {
+                showValidationMessage('#startDate', 'Start date cannot be a weekend (Saturday or Sunday).');
+            }
+            if (endDate && isWeekend(endDate)) {
+                showValidationMessage('#endDate', 'End date cannot be a weekend (Saturday or Sunday).');
+            }
+        });
+
+        function showValidationMessage(inputSelector, message) {
+            $(inputSelector)
+                .addClass('is-invalid')
+                .after('<div class="invalid-feedback">' + message + '</div>');
+        }
+    });
+</script>
