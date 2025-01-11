@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Calculate Working Days";
+}
+<br />
+<h2>Calculate Working Days</h2>
+<hr />
+<br />
+
+<div>
+    <form asp-action="CalculateWorkingDays" method="post">
+        <div class="form-group">
+            <div class="col-3">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-3">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" required />
+            </div>
+        </div>
+        <br />
+
+        <button type="submit" class="btn btn-primary mt-3">Calculate</button>
+    </form>
+</div>
+
+@if (ViewBag.WorkingDays != null)
+{
+    <div class="mt-4 ">
+        <h4>Calculation Results:</h4>
+        <h6><strong>Working Days: @ViewBag.WorkingDays</strong></h6>
+        <p><strong>From:</strong> @ViewBag.StartDate</p>
+
+        <p><strong>To:</strong> @ViewBag.EndDate</p>
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">
+        <p>@ViewBag.Error</p>
+    </div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function disableWeekends(input) {
+            input.on('input', function () {
+                const date = new Date($(this).val());
+                const day = date.getDay();
+
+                // Reset the input if a weekend is selected
+                if (day === 0 || day === 6) {
+                    alert("Weekends (Saturday and Sunday) are not allowed. Please select a weekday.");
+                    $(this).val('');
+                }
+            });
+        }
+
+        // Apply the weekend disabling logic to both inputs
+        disableWeekends($('#startDate'));
+        disableWeekends($('#endDate'));
+    });
+</script>

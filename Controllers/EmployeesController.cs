@@ -1,59 +1,65 @@
-﻿using EmployeeApplication.Data;
-using EmployeeApplication.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using EmployeeApplication.Data; // Importing the Data layer for database interactions.
+using EmployeeApplication.Models; // Importing the Models layer for data structures.
+using Microsoft.AspNetCore.Mvc; // Importing ASP.NET Core MVC namespace for building web controllers.
 
 namespace EmployeeApplication.Controllers
 {
     public class EmployeesController : Controller
     {
+
+        // Action method for displaying the list of all employees.
         public IActionResult Index()
         {
-            List<EmployeesEntity> employees = new List<EmployeesEntity>();
+            List<EmployeesEntity> employees = new List<EmployeesEntity>(); // List to hold employee data.
 
-            Repository repository = new Repository();
+            Repository repository = new Repository();  // Initialize the repository for database operations.
 
-            employees  = repository.GetAllEmployees();
+            employees  = repository.GetAllEmployees(); // Fetch all employees from the database.
 
-            return View(employees);
+            return View(employees); // Pass the employee data to the Index view.
         }
 
-        public ActionResult DeleteEmployee(int Id)
+        //action method for display particular employee details before deletion
+        public ActionResult DeleteEmployee(int Id) 
         {
-            EmployeesEntity employees = new EmployeesEntity();
+            EmployeesEntity employees = new EmployeesEntity(); // Create an object to hold employee data.
 
             Repository repository = new Repository();
 
-            employees = repository.GetEmployeeById(Id);
+            employees = repository.GetEmployeeById(Id); // Fetch the employee by ID.
 
-            return View(employees);
+            return View(employees); // Pass the employee data to the DeleteEmployee view.
 
         }
 
+
+        // action method for handle delete employee
         public IActionResult DeleteEmployeeDetails(int Id, EmployeesEntity employeeDetails)
         {
             try
             {
 
-                if (ModelState.IsValid)
+                if (ModelState.IsValid) // Check if the provided data is valid.
                 {
-                    Repository _DbEmployee = new Repository();
-                    if (_DbEmployee.DeleteEmployeeDetails(Id, employeeDetails))
+                    Repository _DbEmployee = new Repository();  // Initialize the repository.
+                    if (_DbEmployee.DeleteEmployeeDetails(Id, employeeDetails)) // Attempt to delete the employee.
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index"); // Redirect to the Index view if successful.
                     }
                 }
 
-                return View();
+                return View();// If deletion fails or data is invalid, return the view.
 
             }
             catch (Exception ex)
             {
 
-                return View();
+                return View(); // Handle any exceptions and return the view.
 
             }
         }
 
+        //action method for display particular employee details before editing (same as delete)
         public IActionResult EditEmployee(int Id)
         {
             EmployeesEntity employees = new EmployeesEntity();
@@ -65,6 +71,7 @@ namespace EmployeeApplication.Controllers
             return View(employees);
         }
 
+        // action method for handle edit employee details (same as delete)
         public IActionResult EditEmployeeDetails(int Id, EmployeesEntity employeeDetails)
         {
             try
@@ -90,12 +97,14 @@ namespace EmployeeApplication.Controllers
             }
         }
 
+        // action method for displaying the form to add a new employee.
         public ActionResult AddEmployee()
         {
-            return View();
+            return View(); // Render the AddEmployee view.
         }
 
-        public ActionResult AddNewEmployee(EmployeesEntity employeeDetails)
+        // action method for handle add employee details (same as delete,edit)
+        public ActionResult AddNewEmployee(EmployeesEntity employeeDetails) 
         {
             try {
 

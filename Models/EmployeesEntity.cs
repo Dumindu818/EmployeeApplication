@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeApplication.Models
 {
-    public class EmployeesEntity
+    public class EmployeesEntity //Employee Model
     {
         [Key]
         [DisplayName("Employee Id")]
